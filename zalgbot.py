@@ -44,9 +44,12 @@ zalgo_down = [
 zalgo_chars = set(c for c in (zalgo_up + zalgo_mid + zalgo_down))
 
 def random_char(chars):
-	return chars[ random.randint(0, len(chars)) ]
-
-print(zalgo_chars)
+	"""
+	returns a random zalgo character from the given list
+	"""
+	
+	idx = random.randint(0, len(chars) - 1)
+	return chars[idx]
 
 def zalgo_text(text, amount=1, up=True, down=True, mid=True):
 	"""
@@ -61,18 +64,18 @@ def zalgo_text(text, amount=1, up=True, down=True, mid=True):
 		
 		new_text.append(c)
 		
-		num_up = random.randint(0, 16) // 2 + 1
-		num_mid = random.randint(0, 6) // 2
-		num_down = random.randint(0, 16) // 2
+		num_up = random.randint(0, 15) // 2 + 1
+		num_mid = random.randint(0, 5) // 2
+		num_down = random.randint(0, 15) // 2
 		
 		if amount == 0:
-			num_up = random.randint(0, 8)
-			num_mid = random.randint(0, 2)
-			num_down = random.randint(0, 8)
+			num_up = random.randint(0, 7)
+			num_mid = random.randint(0, 1)
+			num_down = random.randint(0, 7)
 		elif amount == 2:
-			num_up = random.randint(0, 64) // 4 + 3
-			num_mid = random.randint(0, 16) // 4 + 1
-			num_down = random.randint(0, 64) // 4 + 3
+			num_up = random.randint(0, 63) // 4 + 3
+			num_mid = random.randint(0, 15) // 4 + 1
+			num_down = random.randint(0, 63) // 4 + 3
 		
 		if up:
 			for i in range(num_up):
@@ -85,3 +88,5 @@ def zalgo_text(text, amount=1, up=True, down=True, mid=True):
 				new_text.append(random_char(zalgo_down))
 	
 	return ''.join(new_text)
+
+print(zalgo_text(input()))
