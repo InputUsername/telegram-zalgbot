@@ -1,6 +1,8 @@
 # ZalgBot
 # (c) 2017 Koen Bolhuis
 
+import random
+
 zalgo_up = [
 	'\u030d', '\u030e', '\u0304', '\u0305', 
 	'\u033f', '\u0311', '\u0306', '\u0310', 
@@ -17,6 +19,15 @@ zalgo_up = [
 	'\u0346', '\u031a'
 ]
 
+zalgo_mid = [
+	'\u0315', '\u031b', '\u0340', '\u0341', 
+	'\u0358', '\u0321', '\u0322', '\u0327', 
+	'\u0328', '\u0334', '\u0335', '\u0336', 
+	'\u034f', '\u035c', '\u035d', '\u035e', 
+	'\u035f', '\u0360', '\u0362', '\u0338', 
+	'\u0337', '\u0361', '\u0489' 
+]
+
 zalgo_down = [
 	'\u0316', '\u0317', '\u0318', '\u0319', 
 	'\u031c', '\u031d', '\u031e', '\u031f', 
@@ -30,11 +41,47 @@ zalgo_down = [
 	'\u0356', '\u0359', '\u035a', '\u0323' 
 ]
 
-zalgo_mid = [
-	'\u0315', '\u031b', '\u0340', '\u0341', 
-	'\u0358', '\u0321', '\u0322', '\u0327', 
-	'\u0328', '\u0334', '\u0335', '\u0336', 
-	'\u034f', '\u035c', '\u035d', '\u035e', 
-	'\u035f', '\u0360', '\u0362', '\u0338', 
-	'\u0337', '\u0361', '\u0489' 
-]
+zalgo_chars = set(c for c in (zalgo_up + zalgo_mid + zalgo_down))
+
+def random_char(chars):
+	return chars[ random.randint(0, len(chars)) ]
+
+print(zalgo_chars)
+
+def zalgo_text(text, amount=1, up=True, down=True, mid=True):
+	"""
+	amount can be 0, 1 or 2
+	"""
+	
+	new_text = []
+	
+	for c in text:
+		if c in zalgo_chars:
+			continue
+		
+		new_text.append(c)
+		
+		num_up = random.randint(0, 16) // 2 + 1
+		num_mid = random.randint(0, 6) // 2
+		num_down = random.randint(0, 16) // 2
+		
+		if amount == 0:
+			num_up = random.randint(0, 8)
+			num_mid = random.randint(0, 2)
+			num_down = random.randint(0, 8)
+		elif amount == 2:
+			num_up = random.randint(0, 64) // 4 + 3
+			num_mid = random.randint(0, 16) // 4 + 1
+			num_down = random.randint(0, 64) // 4 + 3
+		
+		if up:
+			for i in range(num_up):
+				new_text.append(random_char(zalgo_up))
+		if mid:
+			for i in range(num_mid):
+				new_text.append(random_char(zalgo_mid))
+		if down:
+			for i in range(num_down):
+				new_text.append(random_char(zalgo_down))
+	
+	return ''.join(new_text)
