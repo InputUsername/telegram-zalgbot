@@ -89,4 +89,14 @@ def zalgo_text(text, amount=1, up=True, down=True, mid=True):
 	
 	return ''.join(new_text)
 
-print(zalgo_text(input()))
+# Bot functionality
+
+TOKEN = ''
+
+with open('assets/token.txt', 'r') as token_file:
+	TOKEN = token_file.read()
+
+if TOKEN == '':
+	print('Could not read token (assets/token.txt)')
+
+
