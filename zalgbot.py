@@ -138,7 +138,7 @@ def inline_query(bot, update):
 		)
 	]
 
-	bot.answerInlineQuery(update.inline_query_id, results)
+	update.inline_query.answer(results=results)
 
 def error(bot, update, error):
     logger.warn("Update {} caused error {}".format(update, error))
